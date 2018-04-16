@@ -36,14 +36,19 @@ def newpost():
 
 @app.route('/blog')
 def blog():
-    posts = Blog.query.all()
-    return render_template('blog.html', title="Big Ballin'Blog", posts=posts)
+    post_id = request.args.get('id')
+    if post_id == None:
+        posts = Blog.query.all()
+        return render_template('blog.html', title="Big Ballin'Blog", posts=posts)
+    else:
+        post = Blog.query.filter_by(id=post_id).first()
+        return render_template('post.html', title="Big Ballin'Blog", post=post)
 
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
     posts = Blog.query.all()
-    return render_template('blog.html', title="Big Ballin'Blog", posts=posts)
+    return render_template('blog.html', title="Big Ballin' Blog", posts=posts)
 
 
 if __name__ == '__main__':
