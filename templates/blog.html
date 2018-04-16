@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Big Ballin' Blog</h1>
+    <form method='post'>
+        <label>
+            Post Title:
+            <input type="text" name='post-title' />
+        </label>
+        <label>
+            Post:
+            <textarea name="post-body" rows="15" cols="50"></textarea>
+        </label>
+        <input type="submit" value="Post!" />
+    </form>
+
+    <hr />
+
+    {% if posts|length == 0 %}
+    <p>No posts yet</p>
+    {% else %}
+
+            {% for post in posts %}
+            <h3>{{post.title}}</h3>
+            <p>{{post.body}}</p>
+            {% endfor %}
+
+    {% endif %}
+
+
+
+{% endblock %}
