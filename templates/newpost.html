@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Big Ballin' Blog</h1>
+    <form action="/newpost" method="post">
+        <label>
+            Post Title:
+            <input type="text" name="post-title" autofocus />
+        </label>
+        <label>
+            Post:
+            <textarea name="post-body" rows="15" cols="200"></textarea>
+        </label>
+        <input type="submit" value="Post!" />
+    </form>
+
+{% endblock %}

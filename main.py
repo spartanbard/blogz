@@ -19,16 +19,20 @@ class Blog(db.Model):
         self.body = body
 
 
-@app.route('/', methods=['POST', 'GET'])
-def index():
-
+@app.route('/newpost', methods=['POST', 'GET'])
+def newpost():
     if request.method == 'POST':
         post_title = request.form['post-title']
         post_body = request.form['post-body']
         blog_post = Blog(post_title, post_body)
         db.session.add(blog_post)
         db.session.commit()
+        return redirect('/')
+    return render_template('newpost.html')
 
+
+@app.route('/', methods=['POST', 'GET'])
+def index():
     posts = Blog.query.all()
     return render_template('blog.html', title="Big Ballin'Blog", posts=posts)
 

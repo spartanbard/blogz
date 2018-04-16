@@ -2,19 +2,6 @@
 
 {% block content %}
     <h1>Big Ballin' Blog</h1>
-    <form method='post'>
-        <label>
-            Post Title:
-            <input type="text" name='post-title' />
-        </label>
-        <label>
-            Post:
-            <textarea name="post-body" rows="15" cols="50"></textarea>
-        </label>
-        <input type="submit" value="Post!" />
-    </form>
-
-    <hr />
 
     {% if posts|length == 0 %}
     <p>No posts yet</p>
