@@ -24,11 +24,20 @@ def newpost():
     if request.method == 'POST':
         post_title = request.form['post-title']
         post_body = request.form['post-body']
+        if post_title == "" or post_body == "":
+            flash("You must enter both a post title, and a post body.")
+            return render_template('newpost.html', post_title=post_title, post_body=post_body)
         blog_post = Blog(post_title, post_body)
         db.session.add(blog_post)
         db.session.commit()
         return redirect('/')
     return render_template('newpost.html')
+
+
+@app.route('/blog')
+def blog():
+    posts = Blog.query.all()
+    return render_template('blog.html', title="Big Ballin'Blog", posts=posts)
 
 
 @app.route('/', methods=['POST', 'GET'])

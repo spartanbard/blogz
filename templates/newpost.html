@@ -5,11 +5,12 @@
     <form action="/newpost" method="post">
         <label>
             Post Title:
-            <input type="text" name="post-title" autofocus />
+            <input type="text" name="post-title" value="{{post_title}}" autofocus />
         </label>
+        <br />
         <label>
-            Post:
-            <textarea name="post-body" rows="15" cols="200"></textarea>
+            Post Body:
+            <textarea name="post-body" rows="15" cols="50">{{post_body}}</textarea>
         </label>
         <input type="submit" value="Post!" />
     </form>
