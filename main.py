@@ -44,14 +44,18 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
+
+        if not user:
+            flash("User does not exist", 'error')
+        if user and user.password != password:
+            flash("User password incorrect", 'error')
         if user and user.password == password:
             session['username'] = username
             flash("Logged in")
             print(session)
             return redirect('/newpost')
-        else:
-            flash("User password incorrect, or user does not exist", 'error')
 
+        return render_template('login.html', username=username)
     return render_template('login.html')
 
 
@@ -66,20 +70,51 @@ def signup():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        verify = request.form['verify']
-
-        # TODO - validate this shit
+        vpassword = request.form['vpassword']
 
         existing_user = User.query.filter_by(username=username).first()
-        if not existing_user:
+        user_val = ""
+        pass_val = ""
+        vpass_val = ""
+        space_val = ""
+
+        def existing_check():
+            if existing_user:
+                return " *User already exists*"
+            return ""
+
+        def len_check(string):
+            if len(string) < 3 or len(string) > 20:
+                return " *Must be between 3 and 20 characters*"
+            else:
+                return ""
+
+        def verify_check(pswrd, vpass):
+            if pswrd != vpass:
+                return " *Passwords do not match*"
+            else:
+                return ""
+
+        def space_check(string):
+            for i in string:
+                if i == " ":
+                    return " *Cannot contain spaces*"
+            return ""
+
+        user_val += existing_check()
+        user_val += len_check(username)
+        pass_val += len_check(password)
+        vpass_val += verify_check(password, vpassword)
+        space_val += space_check(password)
+
+        if user_val == "" and pass_val == "" and vpass_val == "" and space_val == "":
             new_user = User(username, password)
             db.session.add(new_user)
             db.session.commit()
             session['username'] = username
             return redirect('/newpost')
         else:
-            # TODO - use better response messaging
-            return "<h1>Duplicate user</h1>"
+            return render_template('signup.html', username=username, user_val=user_val, pass_val=pass_val, vpass_val=vpass_val, space_val=space_val)
 
     return render_template('signup.html')
 

@@ -5,21 +5,21 @@
 <form action="/signup" method="post">
     <table>
         <tr>
-            <td><label for="username">Username</label></td>
+            <td><label for="username">Username: {{user_val}}</label></td>
             <td>
-                <input name="username" type="text" value="{{ username }}">
+                <input name="username" type="text" value="{{username}}">
             </td>
         </tr>
         <tr>
-            <td><label for="password">Password</label></td>
+            <td><label for="password">Password: {{pass_val}}{{space_val}}</label></td>
             <td>
                 <input name="password" type="password">
             </td>
         </tr>
         <tr>
-            <td><label for="verify">Verify Password</label></td>
+            <td><label for="vpassword">Verify Password: {{vpass_val}}</label></td>
             <td>
-                <input name="verify" type="password">
+                <input name="vpassword" type="password">
             </td>
         </tr>
     </table>
