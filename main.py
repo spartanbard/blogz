@@ -106,12 +106,16 @@ def newpost():
 @app.route('/blog')
 def blog():
     post_id = request.args.get('id')
-    if post_id == None:
+    user_id = request.args.get('user')
+    if post_id == None and user_id == None:
         posts = Blog.query.all()
-        return render_template('blog.html', title="Big Ballin'Blog", posts=posts)
-    else:
+        return render_template('blog.html', title="Big Ballin' Blog", posts=posts)
+    elif user_id == None:
         post = Blog.query.filter_by(id=post_id).first()
-        return render_template('post.html', title="Big Ballin'Blog", post=post)
+        return render_template('post.html', title="Big Ballin' Blog", post=post)
+    else:
+        posts = Blog.query.filter_by(user_id=user_id).all()
+        return render_template('blog.html',  title="Big Ballin' Blog", posts=posts)
 
 
 @app.route('/', methods=['POST', 'GET'])
